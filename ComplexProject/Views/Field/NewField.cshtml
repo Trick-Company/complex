@@ -1,0 +1,24 @@
+﻿@model FieldDTO
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>NewField</title>
+</head>
+<body>
+    <div class="row">
+        <div class="col-8">
+            <div class="ms-2 mb-3">
+                <label class="form-label">Name</label>
+                <input type="text" class="form-control" asp-for="fieldDTO.Name" placeholder="Field Name">
+                <span asp-validation-for="fieldDTO.Name"></span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
