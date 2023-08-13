@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ComplexProject.Data
 {
-   // [Table("Companies")]
     public class Company
     {
         public int Id { get; set; }
@@ -16,9 +15,14 @@ namespace ComplexProject.Data
 
         [ForeignKey("field")]
         public int Field_Id { get; set; }
-
-
         public Field field { get; set; }
+
+        public List<Employee> Li_Employee { set; get; }
+
+        public List<ComplainSuggestion> Li_ComplainSuggestion { set; get; }
+
+        [InverseProperty("Li_Company")]
+        public List<GeneralServices> Li_GeneralService { set; get; }
 
     }
 }

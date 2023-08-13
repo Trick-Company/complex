@@ -7,6 +7,6 @@ namespace ComplexProject.Models
         public int Id { set; get; }
         public string Name { set; get; }
 
-        public FieldDTO fieldDTO { get; set; }    //lazy loading
+        //public FieldDTO fieldDTO { get; set; }    //lazy loading
     }
 }
