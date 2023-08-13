@@ -8,6 +8,6 @@ namespace ComplexProject.Models
         [Required(ErrorMessage = "Please fill Company Name")]
         public string Name { get; set; }
 
-        public CompanyDTO companyDTO { get; set; }    //lazy loading
+        //public CompanyDTO companyDTO { get; set; }    //lazy loading
     }
 }

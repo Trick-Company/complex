@@ -1,17 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ComplexProject.Data
 {
-    public class Field
+    public class GeneralServices
     {
         public int Id { set; get; }
-        [Required]
-        public string Name { set; get; }
         public string Description { set; get; }
 
+        [InverseProperty("Li_GeneralService")]
+        public List<Company> Li_Company { set; get; }
         
 
-        public List<Company> Li_company { set; get; }
 
     }
 }

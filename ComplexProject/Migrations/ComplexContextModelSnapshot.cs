@@ -22,6 +22,38 @@ namespace ComplexProject.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("CompanyGeneralServices", b =>
+                {
+                    b.Property<int>("Li_CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Li_GeneralServiceId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Li_CompanyId", "Li_GeneralServiceId");
+
+                    b.HasIndex("Li_GeneralServiceId");
+
+                    b.ToTable("CompanyGeneralServices");
+                });
+
+            modelBuilder.Entity("ComplexProject.Data.CoffeShop", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Order")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CoffeShop");
+                });
+
             modelBuilder.Entity("ComplexProject.Data.Company", b =>
                 {
                     b.Property<int>("Id")
@@ -56,7 +88,68 @@ namespace ComplexProject.Migrations
 
                     b.HasIndex("Field_Id");
 
-                    b.ToTable("Companies");
+                    b.ToTable("Company");
+                });
+
+            modelBuilder.Entity("ComplexProject.Data.ComplainSuggestion", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("Company_Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("DescriptionText")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Company_Id");
+
+                    b.ToTable("ComplainSuggestion");
+                });
+
+            modelBuilder.Entity("ComplexProject.Data.Employee", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CoffeShop_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Company_Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CoffeShop_Id");
+
+                    b.HasIndex("Company_Id");
+
+                    b.ToTable("Employee");
                 });
 
             modelBuilder.Entity("ComplexProject.Data.Field", b =>
@@ -67,13 +160,34 @@ namespace ComplexProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Fields");
+                    b.ToTable("Field");
+                });
+
+            modelBuilder.Entity("ComplexProject.Data.GeneralServices", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GeneralService");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -274,15 +388,60 @@ namespace ComplexProject.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("CompanyGeneralServices", b =>
+                {
+                    b.HasOne("ComplexProject.Data.Company", null)
+                        .WithMany()
+                        .HasForeignKey("Li_CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ComplexProject.Data.GeneralServices", null)
+                        .WithMany()
+                        .HasForeignKey("Li_GeneralServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("ComplexProject.Data.Company", b =>
                 {
                     b.HasOne("ComplexProject.Data.Field", "field")
-                        .WithMany("licompany")
+                        .WithMany("Li_company")
                         .HasForeignKey("Field_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("field");
+                });
+
+            modelBuilder.Entity("ComplexProject.Data.ComplainSuggestion", b =>
+                {
+                    b.HasOne("ComplexProject.Data.Company", "company")
+                        .WithMany("Li_ComplainSuggestion")
+                        .HasForeignKey("Company_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("company");
+                });
+
+            modelBuilder.Entity("ComplexProject.Data.Employee", b =>
+                {
+                    b.HasOne("ComplexProject.Data.CoffeShop", "coffeShop")
+                        .WithMany("Li_Employee")
+                        .HasForeignKey("CoffeShop_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ComplexProject.Data.Company", "company")
+                        .WithMany("Li_Employee")
+                        .HasForeignKey("Company_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("coffeShop");
+
+                    b.Navigation("company");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -336,9 +495,21 @@ namespace ComplexProject.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("ComplexProject.Data.CoffeShop", b =>
+                {
+                    b.Navigation("Li_Employee");
+                });
+
+            modelBuilder.Entity("ComplexProject.Data.Company", b =>
+                {
+                    b.Navigation("Li_ComplainSuggestion");
+
+                    b.Navigation("Li_Employee");
+                });
+
             modelBuilder.Entity("ComplexProject.Data.Field", b =>
                 {
-                    b.Navigation("licompany");
+                    b.Navigation("Li_company");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using ComplexProject.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using ComplexProject.Models;
 
 namespace ComplexProject.Data
 {
@@ -12,8 +12,12 @@ namespace ComplexProject.Data
             config= _config;
         }
 
-        public DbSet<Company> Companies{ get; set; }
-        public DbSet<Field> Fields{ get; set; }
+        public DbSet<Company> Company{ get; set; }
+        public DbSet<Employee> Employee{ get; set; }
+        public DbSet<Field> Field{ get; set; }
+        public DbSet<ComplainSuggestion> ComplainSuggestion { get; set; }
+        public DbSet<CoffeShop> CoffeShop { get; set; }
+        public DbSet<GeneralServices> GeneralService { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
