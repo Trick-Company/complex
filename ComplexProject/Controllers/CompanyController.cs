@@ -1,6 +1,15 @@
-﻿namespace ComplexProject.Controllers
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace ComplexProject.Controllers
 {
-    public class CompanyController
+    public class CompanyController:Controller
     {
+        public IActionResult Company()
+        {
+
+            return View();
+        }
+
+
     }
 }
